@@ -15,10 +15,10 @@ class Media
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $chemin = null;
+    #[ORM\Column(length: 255)]
+    private ?string $path = null;
 
-    #[ORM\OneToOne(mappedBy: 'photo', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(mappedBy: 'picture', cascade: ['persist', 'remove'])]
     private ?Boisson $boisson = null;
 
     public function getId(): ?int
@@ -26,14 +26,14 @@ class Media
         return $this->id;
     }
 
-    public function getChemin(): ?string
+    public function getPath(): ?string
     {
-        return $this->chemin;
+        return $this->path;
     }
 
-    public function setChemin(?string $chemin): static
+    public function setPath(string $path): static
     {
-        $this->chemin = $chemin;
+        $this->path = $path;
 
         return $this;
     }
@@ -47,12 +47,12 @@ class Media
     {
         // unset the owning side of the relation if necessary
         if ($boisson === null && $this->boisson !== null) {
-            $this->boisson->setPhoto(null);
+            $this->boisson->setPicture(null);
         }
 
         // set the owning side of the relation if necessary
-        if ($boisson !== null && $boisson->getPhoto() !== $this) {
-            $boisson->setPhoto($this);
+        if ($boisson !== null && $boisson->getPicture() !== $this) {
+            $boisson->setPicture($this);
         }
 
         $this->boisson = $boisson;

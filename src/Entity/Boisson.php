@@ -3,12 +3,23 @@
 namespace App\Entity;
 
 use App\Repository\BoissonRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 
-#[ApiResource()]
+#[ApiResource(
+        operations: [
+        new GetCollection(security: "is_granted('ROLE_BARMAN')"),
+        new Post(security: "is_granted('ROLE_BARMAN')"),
+        new Get(security: "is_granted('ROLE_BARMAN')"),
+        new Patch(security: "is_granted('ROLE_BARMAN')"),
+        new Delete(security: "is_granted('ROLE_BARMAN')"),
+    ],
+)]
 #[ORM\Entity(repositoryClass: BoissonRepository::class)]
 class Boisson
 {
@@ -18,89 +29,51 @@ class Boisson
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nom = null;
+    private ?string $name = null;
 
     #[ORM\Column]
-    private ?float $prix = null;
+    private ?float $price = null;
 
     #[ORM\OneToOne(inversedBy: 'boisson', cascade: ['persist', 'remove'])]
-    private ?Media $photo = null;
-
-    /**
-     * @var Collection<int, Commande>
-     */
-    #[ORM\ManyToMany(targetEntity: Commande::class, mappedBy: 'boissons')]
-    private Collection $commandes;
-
-    public function __construct()
-    {
-        $this->commandes = new ArrayCollection();
-    }
+    private ?Media $picture = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getNom(): ?string
+    public function getName(): ?string
     {
-        return $this->nom;
+        return $this->name;
     }
 
-    public function setNom(string $nom): static
+    public function setName(string $name): static
     {
-        $this->nom = $nom;
+        $this->name = $name;
 
         return $this;
     }
 
-    public function getPrix(): ?float
+    public function getPrice(): ?float
     {
-        return $this->prix;
+        return $this->price;
     }
 
-    public function setPrix(float $prix): static
+    public function setPrice(float $price): static
     {
-        $this->prix = $prix;
+        $this->price = $price;
 
         return $this;
     }
 
-    public function getPhoto(): ?Media
+    public function getPicture(): ?Media
     {
-        return $this->photo;
+        return $this->picture;
     }
 
-    public function setPhoto(?Media $photo): static
+    public function setPicture(?Media $picture): static
     {
-        $this->photo = $photo;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Commande>
-     */
-    public function getCommandes(): Collection
-    {
-        return $this->commandes;
-    }
-
-    public function addCommande(Commande $commande): static
-    {
-        if (!$this->commandes->contains($commande)) {
-            $this->commandes->add($commande);
-            $commande->addBoisson($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCommande(Commande $commande): static
-    {
-        if ($this->commandes->removeElement($commande)) {
-            $commande->removeBoisson($this);
-        }
+        $this->picture = $picture;
 
         return $this;
     }

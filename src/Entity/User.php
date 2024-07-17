@@ -9,41 +9,70 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Core\Annotation\ApiProperty;
+use Symfony\Component\Serializer\Annotation\Groups;
 
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use App\State\UserPasswordHasherProcessor;
 
-#[ApiResource()]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`user`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
+#[ApiResource(
+        normalizationContext: ['groups' => ['read']],
+        denormalizationContext: ['groups' => ['write']],
+        operations: [
+        new GetCollection(security: "is_granted('ROLE_PATRON')"),
+        new Post(security: "is_granted('ROLE_PATRON')", processor: UserPasswordHasherProcessor::class),
+        new Get(security: "is_granted('ROLE_PATRON')"),
+        new Put(security: "is_granted('ROLE_PATRON')", processor: UserPasswordHasherProcessor::class),
+        new Patch(security: "is_granted('ROLE_PATRON')", processor: UserPasswordHasherProcessor::class),
+        new Delete(security: "is_granted('ROLE_PATRON')"),
+    ],
+)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups('read')]
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Groups(['read', 'write'])]
     private ?string $email = null;
 
     /**
      * @var list<string> The user roles
      */
     #[ORM\Column]
+    #[Groups(['read', 'write'])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Groups('read')]
     private ?string $password = null;
 
-    #[ORM\Column(length: 100)]
-    private ?string $firstname = null;
+    #[Groups('write')]
+    private ?string $plainPassword = null;
 
     /**
      * @var Collection<int, Commande>
      */
-    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'server', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'serveur')]
     private Collection $commandes;
+
+    #[ORM\Column(length: 255)]
+    #[Groups(['read', 'write'])]
+    private ?string $firstName = null;
 
     public function __construct()
     {
@@ -125,18 +154,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getFirstname(): ?string
-    {
-        return $this->firstname;
-    }
-
-    public function setFirstname(string $firstname): static
-    {
-        $this->firstname = $firstname;
-
-        return $this;
-    }
-
     /**
      * @return Collection<int, Commande>
      */
@@ -149,7 +166,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->commandes->contains($commande)) {
             $this->commandes->add($commande);
-            $commande->setServer($this);
+            $commande->setServeur($this);
         }
 
         return $this;
@@ -159,10 +176,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->commandes->removeElement($commande)) {
             // set the owning side to null (unless already changed)
-            if ($commande->getServer() === $this) {
-                $commande->setServer(null);
+            if ($commande->getServeur() === $this) {
+                $commande->setServeur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): static
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getPlainPassword(): string
+    {
+        return $this->plainPassword;
+    }
+
+    public function setPlainPassword(string $plainPassword): static
+    {
+        $this->plainPassword = $plainPassword;
 
         return $this;
     }

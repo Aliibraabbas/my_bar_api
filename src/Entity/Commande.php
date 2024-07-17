@@ -3,11 +3,25 @@
 namespace App\Entity;
 
 use App\Repository\CommandeRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use DateTimeImmutable;
 
+#[ApiResource(
+        operations: [
+        new GetCollection(security: "is_granted('ROLE_PATRON') || is_granted('ROLE_BARMAN')"),
+        new Post(),
+        new Get(security: "is_granted('ROLE_PATRON') || is_granted('ROLE_BARMAN')"),
+        new Patch(security: "is_granted('ROLE_PATRON') || is_granted('ROLE_BARMAN') || is_granted('ROLE_SERVEUR')"),
+        new Delete(security: "is_granted('ROLE_PATRON')"),
+    ],
+)]
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
 {
@@ -16,24 +30,19 @@ class Commande
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $createdDate = null;
 
-    /**
-     * @var Collection<int, Boisson>
-     */
-    #[ORM\ManyToMany(targetEntity: Boisson::class, inversedBy: 'commandes')]
-    private Collection $boissons;
+    #[ORM\Column(type: Types::ARRAY)]
+    private array $orderedDrinks = [];
 
     #[ORM\Column]
     private ?int $tableNumber = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $server = null;
+    private ?User $serveur = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?User $barman = null;
 
     #[ORM\Column(length: 255)]
@@ -41,7 +50,8 @@ class Commande
 
     public function __construct()
     {
-        $this->boissons = new ArrayCollection();
+        // Automatically set the createdDate to the current date and time
+        $this->createdDate = new DateTimeImmutable();
     }
 
     public function getId(): ?int
@@ -61,26 +71,14 @@ class Commande
         return $this;
     }
 
-    /**
-     * @return Collection<int, Boisson>
-     */
-    public function getBoissons(): Collection
+    public function getOrderedDrinks(): array
     {
-        return $this->boissons;
+        return $this->orderedDrinks;
     }
 
-    public function addBoisson(Boisson $boisson): static
+    public function setOrderedDrinks(array $orderedDrinks): static
     {
-        if (!$this->boissons->contains($boisson)) {
-            $this->boissons->add($boisson);
-        }
-
-        return $this;
-    }
-
-    public function removeBoisson(Boisson $boisson): static
-    {
-        $this->boissons->removeElement($boisson);
+        $this->orderedDrinks = $orderedDrinks;
 
         return $this;
     }
@@ -97,14 +95,14 @@ class Commande
         return $this;
     }
 
-    public function getServer(): ?User
+    public function getServeur(): ?User
     {
-        return $this->server;
+        return $this->serveur;
     }
 
-    public function setServer(?User $server): static
+    public function setServeur(?User $serveur): static
     {
-        $this->server = $server;
+        $this->serveur = $serveur;
 
         return $this;
     }
@@ -126,8 +124,14 @@ class Commande
         return $this->status;
     }
 
-    public function setStatus(string $status): static
+    public function setStatus(string $status): self
     {
+        $validStatuses = ['en cours de préparation', 'prête', 'payée'];
+
+        if (!in_array($status, $validStatuses)) {
+            throw new \InvalidArgumentException(sprintf('Invalid status "%s". Allowed statuses are %s.', $status, implode(', ', $validStatuses)));
+        }
+
         $this->status = $status;
 
         return $this;
