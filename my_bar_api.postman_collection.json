@@ -1,0 +1,468 @@
+{
+	"info": {
+		"_postman_id": "76bfa3e6-53a1-4961-9a58-91d4d33050af",
+		"name": "my_bar_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24540312"
+	},
+	"item": [
+		{
+			"name": "Liste des boissons",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/boissons",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"boissons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Créer une boisson",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/boissons",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"boissons"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifier une boisson",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/merge-patch+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Boisson 1\",\r\n  \"price\": 15,\r\n  \"picture\": \"https://example.com/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/boissons/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"boissons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"name\": \"Boisson 1\",\r\n  \"price\": 15,\r\n  \"picture\": \"https://example.com/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/boissons/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"boissons",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Créer un utilisateur",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzMwNDAsImV4cCI6MTcyMTEzNjY0MCwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtMkBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJBZGFtIn0.kyeFskosQHkuPSY1X4_QLbFk3uYHQZRXqEyUh7R2yiCg-0t10aMrtFVghI0YXk4HBg5slHcd4WMWCEDJCY9jCnX1NqIz2quzL1S1go2rwxPIf_W3jhD6iYzD9oj_aagaTtK_Zq9LDrkUmRbBp890BTpEGAo9ZVV_Fot5j0VXQYbbyRzRCBFQFFEKPmvBb3bTz0peaRfhRBEz2TUq5blbSvqMxLxiDzb89sG31O_jNsq2vuHiHi_jZrThqj4U2cUkX-XJMY4zET1-OBWL7zfyCwe9P1w0Pct4d2WJbfN1Ppf61BReKUGO_Qy9968Wjq54QMA5CQ4aNbQggJqQItwYDA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"serveur@gmail.com\",\r\n  \"roles\": [\r\n    \"ROLE_SERVEUR\"\r\n  ],\r\n  \"plainPassword\": \"password\",\r\n  \"commandes\": [\r\n    \"commandes\"\r\n  ],\r\n  \"firstName\": \"Adam\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/users",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Connexion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"adam2@gmail.com\",\r\n  \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/auth",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"auth"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lister les utilisateurs",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzE4NzUsImV4cCI6MTcyMTEzNTQ3NSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6IkFkYW0ifQ.W0nIfmblY3CyB6d__uiTlkKH1XehHx4OkSJi_cHS84zt_xwz-L4e7ZvZogcwId23H4jlQIOQWuMWmjkc-3zKYhQK-rk9XDl11GSc8DBmeNOrbsr26YZ4A9vbAPweRMkcDI-HGCCFyo41T9CQFOHqOvD4BAhJfUB4xealjviE4eqYzgJtEU3YLKX23f0oli_k8DpDD5kmOCzP2Phg9syMEehLfC9h5oU-LXT2Rr1fN1Buw81TK-ocPY__9uvN5f4Sb89iNmBS1vNkGAL5pVnVRE_AimP2Yg5oZrjdiI7gP04EhL-AbQrROZdFtQ87Vr-1LEG10Q8GVp6mbX_V2ZebWg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/users",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "l'utilisateur",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzE4NzUsImV4cCI6MTcyMTEzNTQ3NSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6IkFkYW0ifQ.W0nIfmblY3CyB6d__uiTlkKH1XehHx4OkSJi_cHS84zt_xwz-L4e7ZvZogcwId23H4jlQIOQWuMWmjkc-3zKYhQK-rk9XDl11GSc8DBmeNOrbsr26YZ4A9vbAPweRMkcDI-HGCCFyo41T9CQFOHqOvD4BAhJfUB4xealjviE4eqYzgJtEU3YLKX23f0oli_k8DpDD5kmOCzP2Phg9syMEehLfC9h5oU-LXT2Rr1fN1Buw81TK-ocPY__9uvN5f4Sb89iNmBS1vNkGAL5pVnVRE_AimP2Yg5oZrjdiI7gP04EhL-AbQrROZdFtQ87Vr-1LEG10Q8GVp6mbX_V2ZebWg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/users/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifier un utilisateur",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzE4NzUsImV4cCI6MTcyMTEzNTQ3NSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtQGdtYWlsLmNvbSIsImZpcnN0bmFtZSI6IkFkYW0ifQ.W0nIfmblY3CyB6d__uiTlkKH1XehHx4OkSJi_cHS84zt_xwz-L4e7ZvZogcwId23H4jlQIOQWuMWmjkc-3zKYhQK-rk9XDl11GSc8DBmeNOrbsr26YZ4A9vbAPweRMkcDI-HGCCFyo41T9CQFOHqOvD4BAhJfUB4xealjviE4eqYzgJtEU3YLKX23f0oli_k8DpDD5kmOCzP2Phg9syMEehLfC9h5oU-LXT2Rr1fN1Buw81TK-ocPY__9uvN5f4Sb89iNmBS1vNkGAL5pVnVRE_AimP2Yg5oZrjdiI7gP04EhL-AbQrROZdFtQ87Vr-1LEG10Q8GVp6mbX_V2ZebWg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/merge-patch+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"string@gmail.com\",\r\n  \"roles\": [\r\n    \"ROLE_PATRON\"\r\n  ],\r\n  \"plainPassword\": \"string\",\r\n  \"firstName\": \"Hello\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/users/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete un utilisateur",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzIzNzEsImV4cCI6MTcyMTEzNTk3MSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtMkBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJBZGFtIn0.Md7TgnpkCOaEYWQa1D1gNfdMXKnfWpjiqQdEhTsNfTFgXbv8gM8DYHp7-AdF3q03gviaLUsFm5NXplrmWmjZ8lZtlhE6miO34domeGCS0ZCDgrYlsDUT7bbvGIq8uziJdYyLE7ZdCpRzFGcRE2CoHF5gCf1jFq-lfhsCBAaauzueX3i7uTlz5aKm7e6emRqZIGoZ1J79J4S3QAbFgj48BwkrkSkjaFVkMTquWCDyahZZaeSM_tcLpK_WSQxX_1QiqvjCzfEyKs66_5cSfgrmCy2jcs6J_OVcYAamJuptUw6Eern3F7HdeuiAA44cTdw_LHid8ssQ8LT_v0oH1_Tq0A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/commandes/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"commandes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Lister les commandes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzIzNzEsImV4cCI6MTcyMTEzNTk3MSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtMkBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJBZGFtIn0.Md7TgnpkCOaEYWQa1D1gNfdMXKnfWpjiqQdEhTsNfTFgXbv8gM8DYHp7-AdF3q03gviaLUsFm5NXplrmWmjZ8lZtlhE6miO34domeGCS0ZCDgrYlsDUT7bbvGIq8uziJdYyLE7ZdCpRzFGcRE2CoHF5gCf1jFq-lfhsCBAaauzueX3i7uTlz5aKm7e6emRqZIGoZ1J79J4S3QAbFgj48BwkrkSkjaFVkMTquWCDyahZZaeSM_tcLpK_WSQxX_1QiqvjCzfEyKs66_5cSfgrmCy2jcs6J_OVcYAamJuptUw6Eern3F7HdeuiAA44cTdw_LHid8ssQ8LT_v0oH1_Tq0A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/commandes",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"commandes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "une commande",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/commandes/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"commandes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Modifier une commande",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzIzNzEsImV4cCI6MTcyMTEzNTk3MSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtMkBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJBZGFtIn0.Md7TgnpkCOaEYWQa1D1gNfdMXKnfWpjiqQdEhTsNfTFgXbv8gM8DYHp7-AdF3q03gviaLUsFm5NXplrmWmjZ8lZtlhE6miO34domeGCS0ZCDgrYlsDUT7bbvGIq8uziJdYyLE7ZdCpRzFGcRE2CoHF5gCf1jFq-lfhsCBAaauzueX3i7uTlz5aKm7e6emRqZIGoZ1J79J4S3QAbFgj48BwkrkSkjaFVkMTquWCDyahZZaeSM_tcLpK_WSQxX_1QiqvjCzfEyKs66_5cSfgrmCy2jcs6J_OVcYAamJuptUw6Eern3F7HdeuiAA44cTdw_LHid8ssQ8LT_v0oH1_Tq0A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/merge-patch+json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"createdDate\": \"2024-07-16T12:23:47.566Z\",\r\n  \"orderedDrinks\": [\r\n    \"string\"\r\n  ],\r\n  \"tableNumber\": 0,\r\n  \"waiter\": \"https://example.com/\",\r\n  \"barman\": \"https://example.com/\",\r\n  \"status\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/commandes/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"commandes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Supprimer une commande",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzIzNzEsImV4cCI6MTcyMTEzNTk3MSwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtMkBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJBZGFtIn0.Md7TgnpkCOaEYWQa1D1gNfdMXKnfWpjiqQdEhTsNfTFgXbv8gM8DYHp7-AdF3q03gviaLUsFm5NXplrmWmjZ8lZtlhE6miO34domeGCS0ZCDgrYlsDUT7bbvGIq8uziJdYyLE7ZdCpRzFGcRE2CoHF5gCf1jFq-lfhsCBAaauzueX3i7uTlz5aKm7e6emRqZIGoZ1J79J4S3QAbFgj48BwkrkSkjaFVkMTquWCDyahZZaeSM_tcLpK_WSQxX_1QiqvjCzfEyKs66_5cSfgrmCy2jcs6J_OVcYAamJuptUw6Eern3F7HdeuiAA44cTdw_LHid8ssQ8LT_v0oH1_Tq0A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{BASE_URL}}/users/1",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"users",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ajouter une commande",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJpYXQiOjE3MjExMzMwNDAsImV4cCI6MTcyMTEzNjY0MCwicm9sZXMiOlsiUk9MRV9QQVRST04iLCJST0xFX1VTRVIiXSwidXNlcm5hbWUiOiJhZGFtMkBnbWFpbC5jb20iLCJmaXJzdG5hbWUiOiJBZGFtIn0.kyeFskosQHkuPSY1X4_QLbFk3uYHQZRXqEyUh7R2yiCg-0t10aMrtFVghI0YXk4HBg5slHcd4WMWCEDJCY9jCnX1NqIz2quzL1S1go2rwxPIf_W3jhD6iYzD9oj_aagaTtK_Zq9LDrkUmRbBp890BTpEGAo9ZVV_Fot5j0VXQYbbyRzRCBFQFFEKPmvBb3bTz0peaRfhRBEz2TUq5blbSvqMxLxiDzb89sG31O_jNsq2vuHiHi_jZrThqj4U2cUkX-XJMY4zET1-OBWL7zfyCwe9P1w0Pct4d2WJbfN1Ppf61BReKUGO_Qy9968Wjq54QMA5CQ4aNbQggJqQItwYDA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"orderedDrinks\": [\r\n    \"string\"\r\n  ],\r\n  \"tableNumber\": 0,\r\n  \"waiter\": \"api/users/3\",\r\n  \"barman\": \"api/users/3\",\r\n  \"status\": \"string\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/commandes",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"commandes"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "https://127.0.0.1:8000/api"
+		}
+	]
+}
