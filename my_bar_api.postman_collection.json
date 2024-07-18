@@ -368,7 +368,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"createdDate\": \"2024-07-16T12:23:47.566Z\",\r\n  \"orderedDrinks\": [\r\n    \"string\"\r\n  ],\r\n  \"tableNumber\": 0,\r\n  \"waiter\": \"https://example.com/\",\r\n  \"barman\": \"https://example.com/\",\r\n  \"status\": \"string\"\r\n}",
+					"raw": "{\r\n  \"createdDate\": \"2024-07-16T12:23:47.566Z\",\r\n  \"orderedDrinks\": [\r\n    \"string\"\r\n  ],\r\n  \"tableNumber\": 0,\r\n  \"serveur\": \"https://example.com/\",\r\n  \"barman\": \"https://example.com/\",\r\n  \"status\": \"string\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -439,7 +439,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"orderedDrinks\": [\r\n    \"string\"\r\n  ],\r\n  \"tableNumber\": 0,\r\n  \"waiter\": \"api/users/3\",\r\n  \"barman\": \"api/users/3\",\r\n  \"status\": \"string\"\r\n}",
+					"raw": "{\r\n  \"orderedDrinks\": [\r\n    \"string\"\r\n  ],\r\n  \"tableNumber\": 0,\r\n  \"serveur\": \"api/users/3\",\r\n  \"barman\": \"api/users/3\",\r\n  \"status\": \"string\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
